@@ -1,0 +1,4 @@
+module SwisstronikSwift {
+    header "swisstronik.h"
+    export *
+}

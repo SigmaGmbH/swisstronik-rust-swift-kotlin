@@ -1,0 +1,49 @@
+[package]
+name = "swisstronik-rust-swift-kotlin"
+version = "1.0.0"
+authors = ["Denis <dev-adv@swisstronik.com", "Mike <mike@swisstronik.com"]
+edition = "2021"
+
+[lib]
+name = "swisstronik"
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+log = "0.4.20"
+log-panics = "2.1.0"
+protobuf = "3.2.0"
+deoxys = "0.1.0"
+rand = "0.8.5"
+sha2 = "0.10.7"
+hmac = "0.12.1"
+hex = "0.4.3"
+x25519-dalek = { version = "2.0.0", features = ["static_secrets"] }
+
+
+[target.'cfg(target_os="android")'.dependencies]
+jni = { version = "0.21.1", default-features = false }
+android_logger = "0.13.3"
+
+
+[target.'cfg(target_os = "ios")'.dependencies]
+
+[build-dependencies]
+env_logger = "0.10.0"
+protobuf-codegen = "3.2.0"
+
+[profile.release-full]
+inherits = "release"
+strip = true  # https://doc.rust-lang.org/cargo/reference/profiles.html#strip
+opt-level = "s"  # Optimize for size.
+lto = "fat" # https://doc.rust-lang.org/cargo/reference/profiles.html#lto
+codegen-units = 1 # https://doc.rust-lang.org/cargo/reference/profiles.html#codegen-units
+#debug = false # https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks
+#rpath = false
+#debug-assertions = false
+#panic = 'abort' # https://doc.rust-lang.org/cargo/reference/profiles.html#panic
+#incremental = false # https://doc.rust-lang.org/cargo/reference/profiles.html#incremental
+#overflow-checks = true # https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks
+
+[profile.release]
+opt-level = "z"  # Optimize for size.
+lto = "fat" # https://doc.rust-lang.org/cargo/reference/profiles.html#lto

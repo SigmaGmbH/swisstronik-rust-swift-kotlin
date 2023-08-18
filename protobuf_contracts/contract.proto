@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package ffi.contract;
+
+// Generic errors
+
+message DeserializationError {
+   string field_name = 1;
+   string description = 2;
+}
+message BytearrayWrongLengthError {
+   string field_name = 1;
+   uint32 expected_length = 2;
+   uint32 actual_length = 3;
+}
+
+//General request
+
+message FFIRequest {
+   oneof req {
+      DeoxysIIEncryptRequest encrypt = 1;
+      DeoxysIIDecryptRequest decrypt = 2;
+   }
+}
+
+// Encrypt
+message DeoxysIIEncryptRequest {
+   bytes private_key = 1;
+   bytes data = 2;
+   bytes node_public_key = 3;
+}
+
+message DeoxysIIEncryptResponse {
+   oneof response {
+      DeoxysIIEncryptSuccessResponse success = 1;
+      DeoxysIIEncryptFailureResponse failure = 2;
+   }
+}
+message DeoxysIIEncryptSuccessResponse {
+   bytes result = 1;
+}
+message DeoxysIIEncryptFailureResponse {
+   oneof error {
+      string encryption_error = 1;
+   }
+}
+
+// Decrypt
+message DeoxysIIDecryptRequest {
+   bytes private_key = 1;
+   bytes encrypted_data = 2;
+   bytes node_public_key = 3;
+}
+message DeoxysIIDecryptResponse {
+   oneof response {
+      DeoxysIIDecryptSuccessResponse success = 1;
+      DeoxysIIDecryptFailureResponse failure = 2;
+   }
+}
+message DeoxysIIDecryptSuccessResponse {
+   bytes result = 1;
+}
+message DeoxysIIDecryptFailureResponse {
+   oneof error {
+      string decryption_error = 1;
+   }
+}
