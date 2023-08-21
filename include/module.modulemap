@@ -1,4 +1,4 @@
-module SwisstronikSwift {
+module SwisstronikRust {
     header "swisstronik.h"
     export *
 }
