@@ -10,7 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  build-xcframework:
 
     runs-on: macos-latest
 
@@ -20,6 +20,11 @@ jobs:
       uses: arduino/setup-protoc@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@nightly
+      with:
+        targets: aarch64-apple-ios,aarch64-apple-ios-sim,aarch64-apple-darwin,aarch64-apple-ios-macabi,x86_64-apple-ios,x86_64-apple-darwin,x86_64-apple-ios-macabi
+
     - name: Build
       run: |
         cargo +nightly build -Zbuild-std  --target aarch64-apple-ios --profile release-full
