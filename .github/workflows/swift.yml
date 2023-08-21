@@ -2,9 +2,8 @@ name: Swift
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags:
+      - 'v*'
 
 env:
   CARGO_TERM_COLOR: always
@@ -55,5 +54,8 @@ jobs:
     - name: XCFramework
       run: |
         xcodebuild -create-xcframework -library ./swisstronik/libswisstronik_macos.a -headers ./include/ -library ./swisstronik/libswisstronik_iossimulator.a -headers ./include/ -library ./swisstronik/libswisstronik_maccatalyst.a -headers ./include/ -library ./target/aarch64-apple-ios/release-full/libswisstronik.a -headers ./include/ -output ./swisstronik/SwisstronikRust.xcframework
-        
+    - uses: actions/upload-artifact@v3
+      with:
+        name: SwisstronikRust.xcframework
+        path: ./swisstronik/SwisstronikRust.xcframework
 
