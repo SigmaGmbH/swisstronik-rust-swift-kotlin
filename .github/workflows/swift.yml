@@ -27,9 +27,10 @@ jobs:
 
     - name: Install more rust stuff
       run: |
-        rustup component add rust-src --toolchain nightly-aarch64-apple-ios-sim
-        rustup component add rust-src --toolchain nightly-aarch64-apple-ios
-        rustup component add rust-src --toolchain nightly-aarch64-apple-darwin
+#
+#        rustup component add rust-src --toolchain nightly-aarch64-apple-ios-sim
+#        rustup component add rust-src --toolchain nightly-aarch64-apple-ios
+#        rustup component add rust-src --toolchain nightly-aarch64-apple-darwin
         rustup component add rust-src --toolchain nightly-x86_64-apple-darwin
         rustup component add rust-src --toolchain nightly-x86_64-apple-ios
 
