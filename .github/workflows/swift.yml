@@ -1,0 +1,48 @@
+name: Swift
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Protoc
+      uses: arduino/setup-protoc@v2
+    - name: Build
+      run: |
+        cargo +nightly build -Zbuild-std  --target aarch64-apple-ios --profile release-full
+        cargo +nightly build -Zbuild-std  --target aarch64-apple-ios-sim --profile release-full
+        cargo +nightly build -Zbuild-std  --target aarch64-apple-darwin --profile release-full
+        cargo +nightly build -Zbuild-std  --target aarch64-apple-ios-macabi --profile release-full
+        cargo +nightly build -Zbuild-std  --target x86_64-apple-ios --profile release-full
+        cargo +nightly build -Zbuild-std  --target x86_64-apple-darwin --profile release-full
+        cargo +nightly build -Zbuild-std  --target x86_64-apple-ios-macabi --profile release-full
+    - name: Strip
+      run: |
+        strip ./target/x86_64-apple-ios/release-full/libswisstronik.a
+        strip ./target/x86_64-apple-darwin/release-full/libswisstronik.a
+        strip ./target/x86_64-apple-ios-macabi/release-full/libswisstronik.a
+        strip ./target/aarch64-apple-ios/release-full/libswisstronik.a
+        strip ./target/aarch64-apple-ios-sim/release-full/libswisstronik.a
+        strip ./target/aarch64-apple-darwin/release-full/libswisstronik.a
+        strip ./target/aarch64-apple-ios-macabi/release-full/libswisstronik.a
+    - name: Create libs
+      run: |
+        lipo -create ./target/x86_64-apple-darwin/release-full/libswisstronik.a ./target/aarch64-apple-darwin/release-full/libswisstronik.a -output ./swisstronik/libswisstronik_macos.a
+        lipo -create ./target/x86_64-apple-ios/release-full/libswisstronik.a ./target/aarch64-apple-ios-sim/release-full/libswisstronik.a -output ./swisstronik/libswisstronik_iossimulator.a
+        lipo -create ./target/x86_64-apple-ios-macabi/release-full/libswisstronik.a ./target/aarch64-apple-ios-macabi/release-full/libswisstronik.a -output ./swisstronik/libswisstronik_maccatalyst.a
+    - name: XCFramework
+      run: |
+        xcodebuild -create-xcframework -library ./swisstronik/libswisstronik_macos.a -headers ./include/ -library ./swisstronik/libswisstronik_iossimulator.a -headers ./include/ -library ./swisstronik/libswisstronik_maccatalyst.a -headers ./include/ -library ./target/aarch64-apple-ios/release-full/libswisstronik.a -headers ./include/ -output ./swisstronik/SwisstronikRust.xcframework
+        
+
