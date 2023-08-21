@@ -28,7 +28,6 @@ jobs:
     - name: Install more rust stuff
       run: |
         rustup component add rust-src --toolchain nightly-x86_64-apple-darwin
-        rustup component add rust-src --toolchain nightly-x86_64-apple-ios
 
     - name: Build
       run: |
