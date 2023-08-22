@@ -6,7 +6,7 @@ use crate::protobuf_generated::contract::*;
 use protobuf::Message;
 
 #[no_mangle]
-pub extern "system" fn Java_com_swisstronik_kotlin_Rust_call<'local>(
+pub extern "system" fn Java_com_swisstronik_kotlin_SwisstronikKotlin_call<'local>(
     env: JNIEnv<'local>,
     _: JClass<'local>,
     input: JByteArray<'local>,
@@ -39,7 +39,7 @@ pub extern "system" fn Java_com_swisstronik_kotlin_Rust_call<'local>(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_swisstronik_kotlin_Rust_initLogger(
+pub unsafe extern "system" fn Java_com_swisstronik_kotlin_SwisstronikKotlin_initLogger(
     _: JNIEnv,
     _: JClass,
 ) {
