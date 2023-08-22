@@ -1,5 +1,5 @@
 import XCTest
-@testable import swisstronik_swift
+@testable import SwisstronikSwift
 
 extension String {
 

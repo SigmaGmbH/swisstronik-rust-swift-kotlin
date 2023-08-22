@@ -1,19 +1,19 @@
 // swift-tools-version:5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// Swift Package: swisstronik-swift
+// Swift Package: SwisstronikSwift
 
 import PackageDescription;
 
 let package = Package(
-    name: "swisstronik-swift",
+    name: "SwisstronikSwift",
     platforms: [
         .iOS(.v13),
         .macOS(.v10_10),
     ],
     products: [
         .library(
-            name: "swisstronik-swift",
-            targets: ["swisstronik-swift"]
+            name: "SwisstronikSwift",
+            targets: ["SwisstronikSwift"]
         )
     ],
     dependencies: [
@@ -22,7 +22,7 @@ let package = Package(
     targets: [
         .binaryTarget(name: "SwisstronikRust", path: "./swisstronik/SwisstronikRust.xcframework"),
         .target(
-            name: "swisstronik-swift",
+            name: "SwisstronikSwift",
             dependencies: [
                 .target(name: "SwisstronikRust"),
                 .product(name: "SwiftProtobuf", package: "swift-protobuf")
@@ -35,10 +35,10 @@ let package = Package(
             publicHeadersPath: "include/swisstronik.h"
         ),
         .testTarget(
-            name: "swisstronik-swift-tests",
+            name: "SwisstronikSwift-tests",
             dependencies: [
                 .target(name: "SwisstronikRust"),
-                "swisstronik-swift"
+                "SwisstronikSwift"
             ],
             path: "swift/tests"
         )
