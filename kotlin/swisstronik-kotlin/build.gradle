@@ -1,0 +1,46 @@
+plugins {
+    id "com.google.protobuf" version "0.9.4"
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+}
+android {
+    compileSdk 33
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 33
+        ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDir 'jniLibs'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+//            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        applicationVariants {
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    namespace 'com.swisstronik.kotlin'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
