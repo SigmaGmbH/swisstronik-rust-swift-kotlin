@@ -32,10 +32,15 @@ let package = Package(
                 "swift/SwisstronikSwift.swift",
                 "swift/protobuf_contracts",
             ],
-            publicHeadersPath: "include",
-            cSettings: [
-                .headerSearchPath("include/"),
-            ]
+            publicHeadersPath: "include/swisstronik.h"
+        ),
+        .testTarget(
+            name: "swisstronik-swift-tests",
+            dependencies: [
+                .target(name: "SwisstronikRust"),
+                "swisstronik-swift"
+            ],
+            path: "swift/tests"
         )
     ]
 )

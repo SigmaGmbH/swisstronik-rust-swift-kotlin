@@ -41,7 +41,7 @@ func rustCall<Response: SwiftProtobuf.Message>(_ request: Ffi_Contract_FFIReques
 }
 
 
-func swisstronikEncrypt(privateKey: Data, nodePublicKey: Data, data: Data) throws -> Data? {
+func SwisstronikEncrypt(privateKey: Data, nodePublicKey: Data, data: Data) throws -> Data? {
     let req = Ffi_Contract_FFIRequest.with {
         $0.encrypt = Ffi_Contract_DeoxysIIEncryptRequest.with {
             $0.privateKey = privateKey
@@ -62,7 +62,7 @@ func swisstronikEncrypt(privateKey: Data, nodePublicKey: Data, data: Data) throw
     }
 }
 
-func swisstronikDecrypt(privateKey: Data, nodePublicKey: Data, encryptedData: Data) throws -> Data? {
+func SwisstronikDecrypt(privateKey: Data, nodePublicKey: Data, encryptedData: Data) throws -> Data? {
     let req = Ffi_Contract_FFIRequest.with {
         $0.decrypt = Ffi_Contract_DeoxysIIDecryptRequest.with {
             $0.privateKey = privateKey
