@@ -9,3 +9,4 @@ This is the repo for shared Rust code to be used in Swisstronik Swift & Kotlin.
 
 `protoc --swift_out=./ProtobufGenerated/ protobuf_contracts/contract.proto`
 
+`protoc --java_out=kotlin/swisstronik-kotlin/src/main/java --kotlin_out=kotlin/swisstronik-kotlin/src/main/java protobuf_contracts/contract.proto`
