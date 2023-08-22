@@ -353,4 +353,7 @@ lint/tmp/
 hs_err_pid*
 
 .idea/
-
+kotlin/swisstronik-kotlin/src/main/jniLibs/**/*.so
+swisstronik/SwisstronikRust.xcframework
+swisstronik/*.a
+.swiftpm/
