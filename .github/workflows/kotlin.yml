@@ -32,10 +32,9 @@ jobs:
         uses: dtolnay/rust-toolchain@nightly
         with:
           targets: armv7-linux-androideabi,aarch64-linux-android
-
-#      - name: Install more rust stuff
-#        run: |
-#          rustup component add rust-src --toolchain nightly-x86_64-apple-darwin
+      - name: Install more rust stuff
+        run: |
+          rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
       - run: cargo install cargo-ndk
       - name: Build
         run: |
