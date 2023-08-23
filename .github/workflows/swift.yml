@@ -23,7 +23,7 @@ jobs:
       uses: dtolnay/rust-toolchain@nightly
       with:
         targets: aarch64-apple-ios,aarch64-apple-ios-sim,aarch64-apple-darwin,x86_64-apple-ios,x86_64-apple-darwin
-
+    - uses: Swatinem/rust-cache@v2
     - name: Install more rust stuff
       run: |
         rustup component add rust-src --toolchain nightly-x86_64-apple-darwin
