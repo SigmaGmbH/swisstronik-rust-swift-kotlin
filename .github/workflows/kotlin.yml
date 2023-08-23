@@ -1,0 +1,46 @@
+name: Kotlin
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-jnilibs:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      - uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r25b
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: armv7-linux-androideabi,aarch64-linux-android
+
+#      - name: Install more rust stuff
+#        run: |
+#          rustup component add rust-src --toolchain nightly-x86_64-apple-darwin
+      - run: cargo install cargo-ndk
+      - name: Build
+        run: |
+          cargo +nightly ndk -t i686-linux-android -t x86_64-linux-android -t armeabi-v7a -t arm64-v8a -o kotlin/swisstronik-kotlin/src/main/jniLibs/ build -Zbuild-std --profile release-full
+      - uses: actions/upload-artifact@v3
+        with:
+          name: JNILibs
+          path:  ./kotlin/swisstronik-kotlin/src/main/jniLibs/
