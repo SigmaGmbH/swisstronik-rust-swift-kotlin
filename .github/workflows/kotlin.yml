@@ -43,3 +43,11 @@ jobs:
         with:
           name: JNILibs
           path:  ./kotlin/swisstronik-kotlin/src/main/jniLibs/
+      - name: Publish package
+        uses: gradle/gradle-build-action@v2.7.0
+        with:
+          arguments: :swisstronik-kotlin:publishReleasePublicationToGitHubPackagesRepository
+          build-root-directory: kotlin/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
