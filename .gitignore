@@ -357,3 +357,4 @@ kotlin/swisstronik-kotlin/src/main/jniLibs/**/*.so
 swisstronik/SwisstronikRust.xcframework
 swisstronik/*.a
 .swiftpm/
+TestResults/
