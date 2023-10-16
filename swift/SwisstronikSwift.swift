@@ -20,7 +20,7 @@ private func extractByteBuffer(_ bb: ByteBuffer) -> (Data?, SwisstronikRustError
 }
 
 
-func rustCall<Response: SwiftProtobuf.Message>(_ request: Ffi_Contract_FFIRequest) throws -> Response {
+private func rustCall<Response: SwiftProtobuf.Message>(_ request: Ffi_Contract_FFIRequest) throws -> Response {
     let reqData = try! request.serializedData()
     let resByteBuffer = try reqData.withUnsafeBytes { buffer -> ByteBuffer in
         guard let ptr = buffer.baseAddress?.assumingMemoryBound(to: UInt8.self) else {
@@ -41,7 +41,7 @@ func rustCall<Response: SwiftProtobuf.Message>(_ request: Ffi_Contract_FFIReques
 }
 
 
-func SwisstronikEncrypt(privateKey: Data, nodePublicKey: Data, data: Data) throws -> Data? {
+public func swisstronikEncrypt(privateKey: Data, nodePublicKey: Data, data: Data) throws -> Data? {
     let req = Ffi_Contract_FFIRequest.with {
         $0.encrypt = Ffi_Contract_DeoxysIIEncryptRequest.with {
             $0.privateKey = privateKey
@@ -62,7 +62,7 @@ func SwisstronikEncrypt(privateKey: Data, nodePublicKey: Data, data: Data) throw
     }
 }
 
-func SwisstronikDecrypt(privateKey: Data, nodePublicKey: Data, encryptedData: Data) throws -> Data? {
+public func swisstronikDecrypt(privateKey: Data, nodePublicKey: Data, encryptedData: Data) throws -> Data? {
     let req = Ffi_Contract_FFIRequest.with {
         $0.decrypt = Ffi_Contract_DeoxysIIDecryptRequest.with {
             $0.privateKey = privateKey

@@ -65,9 +65,9 @@ class SwisstronikSwiftTests: XCTestCase {
         let nodePublicKey = "86477673c1c6fd9d061e884f56d440b2ce03fa2fe39a2a4882357a451a7f490e".hexadecimal()!
         let plaintext = try secureRandomData(count: 128)
         print("Plaintext: \(plaintext.hexEncodedString())")
-        let encrypted = try SwisstronikEncrypt(privateKey: userPrivateKey, nodePublicKey: nodePublicKey, data: plaintext)
+        let encrypted = try swisstronikEncrypt(privateKey: userPrivateKey, nodePublicKey: nodePublicKey, data: plaintext)
         print("Encrypted: \(encrypted!.hexEncodedString())")
-        let decrypted = try SwisstronikDecrypt(privateKey: userPrivateKey, nodePublicKey: nodePublicKey, encryptedData: encrypted!)
+        let decrypted = try swisstronikDecrypt(privateKey: userPrivateKey, nodePublicKey: nodePublicKey, encryptedData: encrypted!)
         print("Decrypted: \(decrypted!.hexEncodedString())")
         XCTAssertEqual(plaintext, decrypted!)
     }
