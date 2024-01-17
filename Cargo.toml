@@ -1,6 +1,6 @@
 [package]
 name = "swisstronik-rust-swift-kotlin"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Denis <dev-adv@swisstronik.com", "Mike <mike@swisstronik.com"]
 edition = "2021"
 

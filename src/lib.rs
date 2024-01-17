@@ -101,7 +101,14 @@ pub fn encrypt_ecdh(private_key: [u8; KEY_SIZE], node_public_key: [u8; KEY_SIZE]
     let shared_secret = derive_shared_secret(private_key, node_public_key);
     let salt = TX_KEY_PREFIX.as_bytes();
     let encryption_key = derive_encryption_key(shared_secret.as_bytes(), salt);
-    deoxys_encrypt(&encryption_key, data)
+
+    let encrypted_data = deoxys_encrypt(&encryption_key, data)?;
+    let public_key = get_public_key(private_key);
+    let mut result = Vec::with_capacity(encrypted_data.len() + public_key.len());
+    result.extend_from_slice(&public_key);
+    result.extend(encrypted_data);
+
+    Ok(result)
 }
 
 pub fn decrypt_ecdh(private_key: [u8; KEY_SIZE], node_public_key: [u8; KEY_SIZE], encrypted_data: &[u8]) -> Result<Vec<u8>, deoxys::Error> {
@@ -213,7 +220,8 @@ mod tests {
         rng.fill_bytes(&mut plaintext);
         let node_public_key = get_public_key(node_private_key);
         let encrypted = encrypt_ecdh(user_private_key,node_public_key,&plaintext).unwrap();
-        let decrypted = decrypt_ecdh(user_private_key,node_public_key,encrypted.as_slice());
+        let data_to_decrypt = &encrypted[32..];
+        let decrypted = decrypt_ecdh(user_private_key,node_public_key,data_to_decrypt);
         decrypted.unwrap();
     }
     #[test]
@@ -230,7 +238,8 @@ mod tests {
         rng.fill_bytes(&mut plaintext);
         let node_public_key = get_public_key(node_private_key);
         let encrypted = encrypt_ecdh(user_private_key,node_public_key,&plaintext).unwrap();
-        let decrypted = decrypt_ecdh(user_private_key2,node_public_key,encrypted.as_slice());
+        let data_to_decrypt = &encrypted[32..];
+        let decrypted = decrypt_ecdh(user_private_key2,node_public_key,data_to_decrypt);
         decrypted.unwrap_err();
     }
 
@@ -245,7 +254,8 @@ mod tests {
         rng.fill_bytes(&mut plaintext);
         let node_public_key = bytearray_to_const_size(hex::decode("86477673c1c6fd9d061e884f56d440b2ce03fa2fe39a2a4882357a451a7f490e").unwrap()).unwrap();
         let encrypted = encrypt_ecdh(user_private_key,node_public_key,&plaintext).unwrap();
-        let decrypted = decrypt_ecdh(user_private_key,node_public_key,encrypted.as_slice());
+        let data_to_decrypt = &encrypted[32..];
+        let decrypted = decrypt_ecdh(user_private_key,node_public_key,data_to_decrypt);
         decrypted.unwrap();
     }
     #[test]
