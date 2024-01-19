@@ -1,6 +1,6 @@
 [package]
 name = "swisstronik-rust-swift-kotlin"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["Denis <dev-adv@swisstronik.com", "Mike <mike@swisstronik.com"]
 edition = "2021"
 
@@ -33,7 +33,7 @@ protobuf-codegen = "3.2.0"
 
 [profile.release-full]
 inherits = "release"
-strip = true  # https://doc.rust-lang.org/cargo/reference/profiles.html#strip
+strip = "debuginfo"  # https://doc.rust-lang.org/cargo/reference/profiles.html#strip
 opt-level = "s"  # Optimize for size.
 lto = "fat" # https://doc.rust-lang.org/cargo/reference/profiles.html#lto
 codegen-units = 1 # https://doc.rust-lang.org/cargo/reference/profiles.html#codegen-units

@@ -21,7 +21,7 @@ let package = Package(
     ],
     targets: [
         .binaryTarget(name: "SwisstronikRust",
-                      url: "https://github.com/SigmaGmbH/swisstronik-rust-swift-kotlin/releases/download/v1.0.1/SwisstronikRust.xcframework.zip",
+                      url: "https://github.com/SigmaGmbH/swisstronik-rust-swift-kotlin/releases/download/v1.0.2/SwisstronikRust.xcframework.zip",
                       checksum: "63c5f8767e0504730d7829e05074bf703a5e54be1be1a111877f9961c4887513"
                      ),
         .target(
